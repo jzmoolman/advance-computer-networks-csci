@@ -1,0 +1,14 @@
+Questin 1
+
+You need to providde the host ip and its port.
+
+Question 2
+
+No
+
+
+Question 3.
+
+main.cpp = server
+client.cpp Cleint
+and Sceeenshot

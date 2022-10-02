@@ -20,12 +20,14 @@ int main () {
         }
 
         
-        cout << "Please enter the server IP: ";
-        cin.getline(buffer, 17, '\n');
+        cout << "Please enter the server IP: 127.0.0.1 ";
+        strcpy(buffer, "127.0.0.1");
+        //cin.getline(buffer, 17, '\n');
         serverAddr.sin_family = AF_INET;
         serverAddr.sin_addr.s_addr = inet_addr(buffer);
-        cout << "Please enter port number: ";
-        cin.getline(buffer,6, '\n'); 
+        cout << "Please enter port number: 12345";
+        strcpy(buffer, "12345");
+        //cin.getline(buffer,6, '\n'); 
         serverAddr.sin_port = htons(atoi(buffer));
 
         if ( connect(sock, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) < 0 ) {
@@ -37,7 +39,7 @@ int main () {
         {
             cout << "Type a messsage: "; 
             cin.getline(buffer, 1024, '\n');
-            if ( send(sock, buffer, strlen(buffer), 0) == -1) 
+            if ( send(sock, buffer, strlen(buffer) + 1, 0) == -1) 
             {
                 cout << "Send failed" << endl;
                 exit(EXIT_FAILURE);
