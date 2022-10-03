@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 **/zo_BACKUP
-**zo_TS
+**/zo_TS
+**/zo_SO
