@@ -174,17 +174,13 @@ void* respond(void* buffer) {
     int command = 0;
 
     bool failure = false;
-    //new_socket = *((int*)buffer);
     thread_args_t args = *((thread_args_t*)buffer);
     struct sockaddr_in addr;
     socklen_t addres_size = sizeof(struct sockaddr_in);
-    //in nat enc you can only get router ip
-    //strcpy(clientip, inet_ntoa(addr.sin_addr));
     strcpy(clientip, inet_ntoa(args.address.sin_addr));
     cout << "Client IP: " << clientip << endl;
     memset(message, '\0', sizeof(message));
     size = 0;
-    // read a line at a time, message end with 0
     char route[1024] = {0};
     do {
         nBytes = read(args.sock, c, 1);
