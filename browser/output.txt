@@ -1,0 +1,335 @@
+Please enter listning port: 12345
+Listen to new tcp request...
+New connection!
+# connections: 1
+New connection!
+# connections: 2
+Client IP: 127.0.0.1
+GET / HTTP/1.1
+Parse command: GET
+Route : /
+Host: localhost:12345
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-mobile: ?0
+v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-platform: "macOS"
+, "Google Chrome";v="106", "Not;A=Brand";v="99"
+Upgrade-Insecure-Requests: 1
+ "Google Chrome";v="106", "Not;A=Brand";v="99"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+Client IP: 127.0.0.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Mode: navigate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Dest: document
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://localhost:12345/link
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Command 1
+getsockopt == 0
+Received from: 127.0.0.1: 
+cept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+HTTP/1.1 200 OK
+Date: Sat, 15 Oct 2022 17:31:00 GMT
+Server: gws
+Content-Type: text/html
+Content-Length: 2655
+Connection: Closed
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<h1>JZ MOOLMAN</h1>
+<h2>210587</h1>
+<h2>10/15/2022</h1>
+</body>
+<p> Link to
+<a href="/link">Second</a> page
+</p>
+Link to "<a href="/error">404</a> page
+</p>
+</html
+[1;31mClient disconnected![0m
+[1;31mNumber of  connections: 1[0m
+GET /link HTTP/1.1
+Parse command: GET
+Route : /link
+Host: localhost:12345
+Connection: keep-alive
+sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-mobile: ?0
+v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-platform: "macOS"
+, "Google Chrome";v="106", "Not;A=Brand";v="99"
+Upgrade-Insecure-Requests: 1
+ "Google Chrome";v="106", "Not;A=Brand";v="99"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Mode: navigate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-User: ?1
+gate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Dest: document
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://localhost:12345/
+l+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+New connection!
+Accept-Encoding: gzip, deflate, br
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Language: en-US,en;q=0.9
+r
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Command 1
+getsockopt == 0
+Received from: 127.0.0.1: 
+cept-Language: en-US,en;q=0.9
+r
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+HTTP/1.1 200 OK
+Date: Sat, 15 Oct 2022 17:31:00 GMT
+Server: gws
+Content-Type: text/html
+Content-Length: 1588
+Connection: Closed
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<h1>Link page!!</h1>
+<a href="/">Home</a>
+</body>
+</html
+[1;31mClient disconnected![0m
+[1;31mNumber of  connections: 0[0m
+# connections: 1
+Client IP: 127.0.0.1
+GET / HTTP/1.1
+Parse command: GET
+Route : /
+Host: localhost:12345
+Connection: keep-alive
+sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-mobile: ?0
+v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-platform: "macOS"
+, "Google Chrome";v="106", "Not;A=Brand";v="99"
+Upgrade-Insecure-Requests: 1
+ "Google Chrome";v="106", "Not;A=Brand";v="99"
+New connection!
+# connections: 2
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Mode: navigate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-User: ?1
+gate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Dest: document
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://localhost:12345/link
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Command 1
+getsockopt == 0
+Received from: 127.0.0.1: 
+cept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+HTTP/1.1 200 OK
+Date: Sat, 15 Oct 2022 17:31:00 GMT
+Server: gws
+Content-Type: text/html
+Content-Length: 2655
+Connection: Closed
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<h1>JZ MOOLMAN</h1>
+<h2>210587</h1>
+<h2>10/15/2022</h1>
+</body>
+<p> Link to
+<a href="/link">Second</a> page
+</p>
+Link to "<a href="/error">404</a> page
+</p>
+</html
+[1;31mClient disconnected![0m
+[1;31mNumber of  connections: 1[0m
+Client IP: 127.0.0.1
+GET /error HTTP/1.1
+Parse command: GET
+Route : /error
+Host: localhost:12345
+Connection: keep-alive
+sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-mobile: ?0
+v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+New connection!
+sec-ch-ua-platform: "macOS"
+, "Google Chrome";v="106", "Not;A=Brand";v="99"
+Upgrade-Insecure-Requests: 1
+ "Google Chrome";v="106", "Not;A=Brand";v="99"
+# connections: 2
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Client IP: 127.0.0.1
+Sec-Fetch-Site: same-origin
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Mode: navigate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-User: ?1
+gate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Dest: document
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://localhost:12345/
+l+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Language: en-US,en;q=0.9
+r
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Command 1
+getsockopt == 0
+Received from: 127.0.0.1: 
+cept-Language: en-US,en;q=0.9
+r
+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+HTTP/1.1 404 Not Available
+Date: Sat, 15 Oct 2022 17:31:00 GMT
+Server: gws
+Content-Type: text/html
+Content-Length: 0
+Connection: Closed
+
+
+
+[1;31mClient disconnected![0m
+[1;31mNumber of  connections: 1[0m
+GET / HTTP/1.1
+Parse command: GET
+Route : /
+New connection!
+# connections: Host: localhost:12345
+2
+Client IP: 127.0.0.1
+Connection: keep-alive
+sec-ch-ua: "Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-mobile: ?0
+v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"
+sec-ch-ua-platform: "macOS"
+, "Google Chrome";v="106", "Not;A=Brand";v="99"
+Upgrade-Insecure-Requests: 1
+ "Google Chrome";v="106", "Not;A=Brand";v="99"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Mode: navigate
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Dest: document
+n
+/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://localhost:12345/link
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Command 1
+getsockopt == 0
+Received from: 127.0.0.1: 
+cept-Language: en-US,en;q=0.9
+r
+
+l,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+HTTP/1.1 200 OK
+Date: Sat, 15 Oct 2022 17:31:00 GMT
+Server: gws
+Content-Type: text/html
+Content-Length: 2655
+Connection: Closed
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<h1>JZ MOOLMAN</h1>
+<h2>210587</h1>
+<h2>10/15/2022</h1>
+</body>
+<p> Link to
+<a href="/link">Second</a> page
+</p>
+Link to "<a href="/error">404</a> page
+</p>
+</html
+[1;31mClient disconnected![0m
+[1;31mNumber of  connections: 1[0m
