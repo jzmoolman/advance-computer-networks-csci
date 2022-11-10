@@ -4,7 +4,5 @@ client: client.cpp
 	echo $@
 	$(CC) -o $@ -lstdc++ client.cpp 
 
-print : client.cpp
-	echo $@
-	echo $<
-	echo $^
+server: server.cpp
+	$(CC) -o $@ -lstdc++ $<

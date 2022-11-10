@@ -1,14 +1,18 @@
 #include <iostream>
-#include <sys/socket.h> /* socket AF_INET SOCK_DGRAM  */
-#include <netinet/in.h> /*  sockadrdr  */
-#include <arpa/inet.h>  /* inet_addr */
-#include <unistd.h>  /* clode */
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h> 
+#include <unistd.h>
+
+using namespace std;
+
 int main () {
-  
+
     char buffer[1024] = {0};
 
-    int s, client_address_size;
-    socklen_t namelen; 
+    int s;
+    socklen_t namelen, client_address_size;
     in_addr_t ip;
     int port;
     struct sockaddr_in server, client;
@@ -47,10 +51,31 @@ int main () {
     }
     std::cout << "Server ip: " << inet_ntoa(server.sin_addr) << std::endl;
     std::cout << "Server port: " << ntohs(server.sin_port) << std::endl;
-    
+  
+    client_address_size = sizeof(client);
+    if ( recvfrom(s, buffer, 1024, 0, (struct sockaddr*)&client, &client_address_size) < 0 ) {
+        perror("recvfrom()");
+        exit(4);
+     };
+  
+    std::cout << "Received message " << << " from domain " << << " port " << << " internet\
+         adress " << std::endl;
+     
     
     
     /*  Close socket*/
     close(s);
   
 }
+  
+ //        memset(serverAddr.sin_zero, '\0', sizeof(serverAddr.sin_zero));
+ //        bind(udpSocket, (struct socketaddr*)&serverAddr, sizeof(serverAddr));
+ //        // bind(udpSocket, &serverAddr, sizeof(serverAddr));
+ //       socklen_t addr_size = sizeof(clientAddr); do {
+ //            nBytes  = recvfrom(udpSocket, buffer, 1024, 0, (struct sockaddr*)&clientAddr, &addr_size);
+ //            buffer[nBytes] = '\0';
+ //            clientIP = inet_ntoa(clientAddr.sin_addr);
+ //            cout << clientIP << " says: " << buffer << endl;
+ //        } while (strcmp(buffer, "quit") != 0);
+ //        close(udpSocket);
+ // k      return 0;
