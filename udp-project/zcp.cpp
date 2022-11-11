@@ -2,6 +2,8 @@
 #include <netinet/in.h> /*  sockadrdr  */
 #include <arpa/inet.h>  /* inet_addr */
 
+#include <vector>
+
 #include "zcp.h"
 
 struct client_s *clients = NULL;
@@ -21,9 +23,6 @@ void print_clients() {
 
 void print_packet(packet_s *packet){
   std::cout << "packet seq: "  << packet->seq  << " size: " << packet->size << std::endl;
-  std::cout << "buffer begin>" << std::endl;
-  std::cout << packet->buffer << std::endl;
-  std::cout << "<buffer end" << std::endl;
 }
 
 struct client_s *new_client( struct sockaddr_in addr ) {
@@ -31,6 +30,9 @@ struct client_s *new_client( struct sockaddr_in addr ) {
     memset(client, 0, sizeof(struct client_s));
     memcpy(&client->addr, &addr, sizeof(struct sockaddr_in) );
     client->next = NULL;
+    client->base = 0;
+    // client->packets = new std::vector<struct packet_s*>;
+
     return client;
 }
 
@@ -59,3 +61,61 @@ void new_client_buffer(struct sockaddr_in addr, char* buffer) {
     print_packet(packet);
  }
 
+void new_packet_list(std::vector<struct packet_s * > * list, char* buffer, int size) {
+                                   // std::cout << "DB " << std::endl;
+    if (list == NULL && buffer == NULL) {
+        perror("new_packet_list()");
+        exit(999);
+    }
+                                   // std::cout << "size " << size << std::endl;
+    int packet_buffer_size = PACKET_SIZE_ZCP - 2*sizeof(unsigned int);
+                                   // std::cout << "packet_buffer_size" << packet_buffer_size << std::endl;
+    struct packet_s *packet;
+    for (int i = 0; i < size; i++) {
+                                   // std::cout << "DB " << i << std::endl;
+        int packet_buffer_i = i % packet_buffer_size;
+                                   // std::cout << "packet_buffer_i" << packet_buffer_i << std::endl;
+                                   // std::cout << "DB " << i << std::endl;
+        if ( packet_buffer_i == 0 ) {
+            packet = (struct packet_s *)malloc(sizeof(struct packet_s));
+            packet->seq = list->size()+1;
+            memset(packet->buffer, 0, packet_buffer_size);
+            list->push_back(packet);
+        }
+        packet->buffer[packet_buffer_i] = *(buffer+i);
+        packet->size = packet_buffer_i+1;
+    }
+                                   // std::cout << "DE " << std::endl;
+    return;
+}
+
+void loadFile(char* filename, std::vector<struct packet_s* > *list) {
+    
+    FILE *file;
+    char *buffer;
+    long size;
+                            // std::cout << "DE " << std::endl;
+    file = fopen(filename, "r");
+    if (file == NULL ) {
+        perror("loadFile()");
+        exit(999);
+    }
+
+    fseek(file, 0L, SEEK_END);
+    size = ftell(file);
+    
+    fseek(file, 0L, SEEK_SET);
+    
+    buffer = (char *)malloc(sizeof(size));
+    if (buffer == NULL ) {
+        perror("Out of memory");
+        exit(1);
+    }
+    
+    fread(buffer, sizeof(char), size, file);
+    fclose(file);
+    
+    new_packet_list(list, buffer, size);
+                           // std::cout << "D1 " << list->size() << std::endl;
+
+}

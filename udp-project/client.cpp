@@ -4,6 +4,7 @@
 #include <arpa/inet.h>  /* inet_addr */
 #include <unistd.h>  /* close, getpid */
 #include <stdio.h>
+#include <vector>
 
 #include "zcp.h" 
 
@@ -23,13 +24,18 @@ int main () {
     
     std::cout << "Enter server port: 12345" << std::endl;
     //cin.getline(buffer,1024 , '\n'); 
+    memset(buffer, 0, 1024);
     strcpy(buffer, "12345");
-    
     port = htons(atoi(buffer));
     if (port == 0 ) {
         perror("port not valid");
         exit(1);
     }
+    
+    std::cout << "Filename: image_s.png" << std::endl;
+    //cin.getline(buffer,1024 , '\n'); 
+    memset(buffer, 0, 1024);
+    strcpy(buffer, "image_s.png");
 
     if (( s  = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
         // tcperror("socket()");
@@ -65,22 +71,30 @@ int main () {
     
     /* Send message */
 
-    // strcpy(buffer, strcat("Message from ", itoa(getpid()) ));
-    memset(buffer, 0, PACKET_SIZE_ZCP);
-    sprintf(buffer, "Message from %d", getpid() );
-    packet_s packet;
-    packet.seq = 1;
-    packet.size = strlen(buffer); 
-    memcpy(packet.buffer, buffer, packet.size); 
+    // // strcpy(buffer, strcat("Message from ", itoa(getpid()) ));
+    // memset(buffer, 0, PACKET_SIZE_ZCP);
+    // sprintf(buffer, "Message from %d", getpid() );
+    // packet_s packet;
+    // packet.seq = 1;
+    // packet.size = strlen(buffer); 
+    
+    std::vector< struct packet_s *> list;    
+    // char filename[] = {'i', 'm','a','g','e','_','s','.','p','n','g','\0'};
+    loadFile(buffer, &list);
 
-    if( sendto(s, &packet,  sizeof(packet_s), 0, 
-                (const struct sockaddr *)&server, sizeof(server)) < 0) {
-        perror("sendto()");
-        exit(3);
-        
+    for ( int i = 0; i < list.size(); i++) {
+    // for ( int i = 0; i < 5; i++) {
+                            // std::cout << "Dl " << std::endl;
+        struct packet_s *packet;
+        packet = list.at(i);
+        std::cout << "seq " << packet->seq << " packet size " << packet->size << std::endl; 
+        if( sendto(s, packet,  sizeof(packet_s), 0, 
+                        (const struct sockaddr *)&server, sizeof(server)) < 0) {
+            perror("sendto()");
+            exit(3);
+        }
     }
     
     /*  Close socket*/
     close(s);
-  
 }
