@@ -6,19 +6,16 @@
 int main () {
   
     char buffer[1024] = {0};
-    int s;
+
+    int s, client_address_size;
+    socklen_t namelen; 
     in_addr_t ip;
     int port;
-    struct sockaddr_in server;
+    struct sockaddr_in server, client;
 
-    std::cout << "Enter server ip address: 127.0.0.1" << std::endl;
-    //cin.getline(buffer, 17, '\n'); 
-    strcpy(buffer, "127.0.0.1");
-    ip = inet_addr(buffer);
-    
     std::cout << "Enter server port: 12345" << std::endl;
     //cin.getline(buffer,1024 , '\n'); 
-    strcpy(buffer, "Message from client");
+    strcpy(buffer, "12345");
     
     port = htons(atoi(buffer));
     if (port == 0 ) {
@@ -34,16 +31,24 @@ int main () {
     
     /* Setup up server... */
     server.sin_family = AF_INET;
-    server.sin_port = port;
-    server.sin_addr.s_addr = ip;
+    server.sin_port = port; /* 0 = use any available port */
+    server.sin_addr.s_addr = INADDR_ANY; /* Server's Internet Address */
     
-    /* Send message */
-    if( sendto(s, buffer,  strlen(buffer)+1, 0, 
-                (const struct sockaddr *)&server, sizeof(server)) < 0) {
-        perror("sendto()");
+    /* bind socket*/
+    if( bind(s, (const struct sockaddr *)&server, sizeof(server)) < 0) {
+        perror("bind()");
         exit(3);
-        
     }
+    
+    namelen = sizeof(server);
+    if (getsockname(s, (struct sockaddr*)&server, &namelen) < 0) {
+        perror("bind()");
+        exit(3);
+    }
+    std::cout << "Server ip: " << inet_ntoa(server.sin_addr) << std::endl;
+    std::cout << "Server port: " << ntohs(server.sin_port) << std::endl;
+    
+    
     
     /*  Close socket*/
     close(s);

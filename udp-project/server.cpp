@@ -1,15 +1,60 @@
 #include <iostream>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h> 
-#include <unistd.h>
+#include <sys/socket.h> /* socket AF_INET SOCK_DGRAM  */
+#include <netinet/in.h> /*  sockadrdr  */
+#include <arpa/inet.h>  /* inet_addr */
+#include <unistd.h>  /* close */
 
-using namespace std;
+
+#define PACKET_SIZE_ZCP 1000 /* packet size */
+
+struct client_s {
+    struct sockaddr_in addr;
+    struct client_s *next;
+};
+
+struct client_s *clients = NULL;
+
+struct client_s *new_client( struct sockaddr_in addr ) {
+    struct client_s *client = (struct client_s*)malloc(sizeof(struct client_s));
+    memcpy(&client->addr, &addr, sizeof(struct sockaddr_in) );
+    client->next = NULL;
+    return client;
+}
+
+struct client_s *lookup_client(struct sockaddr_in addr) {
+    struct client_s *client = clients;
+    for ( ;client != NULL; client = client->next ) {
+        if (client->addr.sin_addr.s_addr == addr.sin_addr.s_addr) {
+            return client;
+        }
+    }
+    
+    client  = clients;
+    clients = new_client(addr);
+    clients->next = client;
+    return clients;
+}
+
+void print_addr(struct sockaddr_in addr){
+
+    std::cout << "Family: " <<  ( addr.sin_family == AF_INET ? "AF_INET":"UNKNOWN" )  
+       << " IP: " << inet_ntoa(addr.sin_addr) 
+       << " Port: " << ntohs(addr.sin_port) << std::endl; 
+}
+
+void print_clients() {
+
+    struct client_s *client = clients;
+    for ( ;client != NULL; client = client->next ) {
+         print_addr(client->addr);
+    }
+}
+
+
 
 int main () {
 
-    char buffer[1024] = {0};
+    char buffer[PACKET_SIZE_ZCP] = {0};
 
     int s;
     socklen_t namelen, client_address_size;
@@ -53,13 +98,30 @@ int main () {
     std::cout << "Server port: " << ntohs(server.sin_port) << std::endl;
   
     client_address_size = sizeof(client);
-    if ( recvfrom(s, buffer, 1024, 0, (struct sockaddr*)&client, &client_address_size) < 0 ) {
-        perror("recvfrom()");
-        exit(4);
-     };
+    
+    while (1) {
+        if ( recvfrom(s, buffer, PACKET_SIZE_ZCP, 0, (struct sockaddr*)&client, &client_address_size) < 0 ) {
+            perror("recvfrom()");
+            exit(4);
+         };
+        lookup_client(client);
+        print_clients();
+    }
+
+
   
-    std::cout << "Received message " << << " from domain " << << " port " << << " internet\
-         adress " << std::endl;
+    // std::cout << "Received message: " << buffer << std::endl;
+    // std::cout << "Family: " <<  ( client.sin_family == AF_INET ? "AF_INET":"UNKNOWN" )  
+    //    << " Client IP: " << inet_ntoa(client.sin_addr) 
+    //    << " Port: " << ntohs(client.sin_port) << std::endl; 
+    
+    //  put packet is queue per source ip
+    
+
+    
+    
+    
+        
      
     
     
