@@ -61,8 +61,6 @@ int main () {
     
     std::cout << "Client binding...";
     print_addr(client);
-    // std::cout << "Server ip: " << inet_ntoa(server.sin_addr) << std::endl;
-    // std::cout << "Server port: " << ntohs(server.sin_port) << std::endl;
 
     /* server... */
     server.sin_family = AF_INET;
@@ -71,52 +69,47 @@ int main () {
     
     /* Send message */
 
-    // // strcpy(buffer, strcat("Message from ", itoa(getpid()) ));
-    // memset(buffer, 0, PACKET_SIZE_ZCP);
-    // sprintf(buffer, "Message from %d", getpid() );
-    // packet_s packet;
-    // packet.seq = 1;
-    // packet.size = strlen(buffer); 
+    struct connection_s *connection = lookup_connection(s, server);
     
-    std::vector< struct packet_s *> list;    
-    // char filename[] = {'i', 'm','a','g','e','_','s','.','p','n','g','\0'};
-    loadFile(buffer, &list);
+    // std::vector< struct packet_s *> list;    
+    loadFile(buffer, &(connection->tx_packets));
+    openZCP();
 
-    for ( int i = 0; i < list.size(); i++) {
-    // for ( int i = 0; i < 5; i++) {
-                            // std::cout << "Dl " << std::endl;
-        struct packet_s *packet;
-        packet = list.at(i);
-        print_packet(packet);
-        if ( sendto(s, packet,  sizeof(struct data_packet_s), 0, 
-                        (const struct sockaddr *)&server, sizeof(server)) < 0) {
-            perror("sendto()");
-            exit(3);
-        }
+    // for ( int i = 0; i < list.size(); i++) {
+    // // for ( int i = 0; i < 5; i++) {
+    //                         // std::cout << "Dl " << std::endl;
+    //     struct packet_s *packet;
+    //     packet = list.at(i);
+    //     print_packet(packet);
+    //     if ( sendto(s, packet,  sizeof(struct data_packet_s), 0, 
+    //                     (const struct sockaddr *)&server, sizeof(server)) < 0) {
+    //         perror("sendto()");
+    //         exit(3);
+    //     }
         
         
-        /* receive ack */
-        socklen_t serverlen = 0;
-        memset(buffer, 0, PACKET_SIZE_ZCP);
-        if ( recvfrom(s, buffer, PACKET_SIZE_ZCP, 0, (struct sockaddr*)&server, &serverlen) < 0 ) {
-            perror("recvfrom()");
-            exit(4);
-         };
-        // lookup_connection(client);
-        // std::cout << buffer << std::endl;
-        // print_connections();
-        receive_buffer(server, buffer);
-        // print_packet((struct packet_s *)buffer);
+    //     /* receive ack */
+    //     socklen_t serverlen = 0;
+    //     memset(buffer, 0, PACKET_SIZE_ZCP);
+    //     if ( recvfrom(s, buffer, PACKET_SIZE_ZCP, 0, (struct sockaddr*)&server, &serverlen) < 0 ) {
+    //         perror("recvfrom()");
+    //         exit(4);
+    //      };
+    //     // lookup_connection(client);
+    //     // std::cout << buffer << std::endl;
+    //     // print_connections();
+    //     receive_buffer(server, buffer);
+    //     // print_packet((struct packet_s *)buffer);
         
-    }
+    // }
     
-    //print received packetd
-                                        std::cout << "DB" << std::endl;
-    struct connection_s *connection = lookup_connection(server);
-                                    std::cout << "packet count " << connection->packets.size() << std::endl;
-    if (connection != NULL) {
-        print_connection(connection, 1);
-    }
+    // //print received packetd
+    //                                     std::cout << "DB" << std::endl;
+    // struct connection_s *connection = lookup_connection(server);
+    //                                 std::cout << "packet count " << connection->packets.size() << std::endl;
+    // if (connection != NULL) {
+    //     print_connection(connection, 1);
+    // }
     
     /*  Close socket*/
     close(s);
