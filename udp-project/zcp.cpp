@@ -198,24 +198,51 @@ void *tx_exec(void *args) {
     return NULL;
 }
 
+
+void handle_rx_packets() {
+    
+    struct connection_s *connection = connections;
+    for ( ;connection != NULL; connection = connection->next) {
+        /* loop through all connections */
+        if (connection->rx_packets.size() > connection->tx_base) {
+            for ( int i = 0 ; connection->rx_packets.size(); i++) {      
+                if (connection->tx_base == connection->rx_packets.at(i)->seq-1) {
+                    pthread_mutex_lock(&connection->rx_mutex);
+                    print_packet(connection->rx_packets.at(i));
+                    pthread_mutex_unlock(&connection->rx_mutex);
+                }
+            }
+        } 
+    }
+}
+
 void *rx_exec(void *args) {
     if (connections == NULL) { 
         perror("No connection initialized.");
         exit(1);
     }
+    char buffer[PACKET_SIZE_ZCP];
+    socklen_t addrlen = 0;
     while (1) {
-        /* loop through all connections */
         struct connection_s *connection = connections;
-        for ( ; connection != NULL; connection = connection->next) {
-            if (connection->rx_packets.size() > connection->tx_base) {
-                for ( int i = 0 ; connection->rx_packets.size(); i++) {               
-                    if ( connection->rx_packets.at(i).
-                    ( connection->at(i)))
-                    pthread_mutex_lock(&connection->rx_mutex);
-                    print_packet(connection->rx_packets.at(connection->tx_base));
-
-
-
+        for ( ;connection != NULL; connection = connection->next) {
+            memset(buffer, 0, PACKET_SIZE_ZCP);
+                                                std::cout << "D0 rx_exec" << std::endl;
+            if ( recvfrom(connection->fs, 
+                          buffer, 
+                          PACKET_SIZE_ZCP, 0, 
+                          (struct sockaddr*)&connection->addr,
+                           &addrlen) < 0 ) {
+                perror("recvfrom()");
+                exit(4);
+             };
+                                               std::cout << "D1 rx_exec" << std::endl;
+             receive_buffer(connection->fs, connection->addr, buffer);
+                                               std::cout << "D2 rx_exec" << std::endl;
+        }
+        //handle_rx_packets();
+    }
+}
 
 void openZCP() {
     if (connections == NULL) { 
@@ -223,6 +250,8 @@ void openZCP() {
         exit(1); 
     }
     pthread_create(&tx_t, 0, tx_exec, NULL);
+    pthread_create(&rx_t, 0, rx_exec, NULL);
     pthread_join(tx_t,0);
+    pthread_join(rx_t,0);
     // return 0;
   }

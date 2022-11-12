@@ -19,8 +19,8 @@ int main () {
 
     std::cout << "Enter server ip address: 127.0.0.1" << std::endl;
     //cin.getline(buffer, 17, '\n'); 
-    // strcpy(buffer, "127.0.0.1");
-    strcpy(buffer, "10.0.0.158");
+    strcpy(buffer, "127.0.0.1");
+    // strcpy(buffer, "10.0.0.158");
     ip = inet_addr(buffer);
     
     std::cout << "Enter server port: 12345" << std::endl;

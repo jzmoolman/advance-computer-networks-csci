@@ -12,6 +12,7 @@
 
 struct packet_s {
   int type;
+  unsigned int seq;
 };
 
 
@@ -48,7 +49,7 @@ void print_connection(struct connection_s *connection, int summary);
 void print_packet(packet_s *packet);
 void print_addr(struct sockaddr_in addr);
 struct connection_s *lookup_connection(int fd, struct sockaddr_in addr); 
-void receive_buffer(struct sockaddr_in addr, char *buffer);
+void receive_buffer(int fs, struct sockaddr_in addr, char *buffer);
 void loadFile(char* filename, std::vector<struct packet_s* > *list);
 void openZCP();
 
