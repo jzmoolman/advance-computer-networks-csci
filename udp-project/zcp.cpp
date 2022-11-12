@@ -198,6 +198,25 @@ void *tx_exec(void *args) {
     return NULL;
 }
 
+void *rx_exec(void *args) {
+    if (connections == NULL) { 
+        perror("No connection initialized.");
+        exit(1);
+    }
+    while (1) {
+        /* loop through all connections */
+        struct connection_s *connection = connections;
+        for ( ; connection != NULL; connection = connection->next) {
+            if (connection->rx_packets.size() > connection->tx_base) {
+                for ( int i = 0 ; connection->rx_packets.size(); i++) {               
+                    if ( connection->rx_packets.at(i).
+                    ( connection->at(i)))
+                    pthread_mutex_lock(&connection->rx_mutex);
+                    print_packet(connection->rx_packets.at(connection->tx_base));
+
+
+
+
 void openZCP() {
     if (connections == NULL) { 
         perror("No connection initialized.");
