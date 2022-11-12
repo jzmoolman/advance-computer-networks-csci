@@ -87,12 +87,35 @@ int main () {
                             // std::cout << "Dl " << std::endl;
         struct packet_s *packet;
         packet = list.at(i);
-        std::cout << "seq " << packet->seq << " packet size " << packet->size << std::endl; 
-        if( sendto(s, packet,  sizeof(packet_s), 0, 
+        print_packet(packet);
+        if ( sendto(s, packet,  sizeof(struct data_packet_s), 0, 
                         (const struct sockaddr *)&server, sizeof(server)) < 0) {
             perror("sendto()");
             exit(3);
         }
+        
+        
+        /* receive ack */
+        socklen_t serverlen = 0;
+        memset(buffer, 0, PACKET_SIZE_ZCP);
+        if ( recvfrom(s, buffer, PACKET_SIZE_ZCP, 0, (struct sockaddr*)&server, &serverlen) < 0 ) {
+            perror("recvfrom()");
+            exit(4);
+         };
+        // lookup_connection(client);
+        // std::cout << buffer << std::endl;
+        // print_connections();
+        receive_buffer(server, buffer);
+        // print_packet((struct packet_s *)buffer);
+        
+    }
+    
+    //print received packetd
+                                        std::cout << "DB" << std::endl;
+    struct connection_s *connection = lookup_connection(server);
+                                    std::cout << "packet count " << connection->packets.size() << std::endl;
+    if (connection != NULL) {
+        print_connection(connection, 1);
     }
     
     /*  Close socket*/
