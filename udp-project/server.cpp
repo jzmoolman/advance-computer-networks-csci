@@ -59,7 +59,7 @@ int main () {
             exit(4);
          };
 
-        receive_buffer(s, client, buffer);
+        receive_buffer(SERVER_CONNECTION,s, client, buffer);
         
         // send ack
         int seq = 0;
