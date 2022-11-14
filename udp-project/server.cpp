@@ -58,9 +58,7 @@ int main () {
             perror("recvfrom()");
             exit(4);
          };
-        // lookup_connection(client);
-        // std::cout << buffer << std::endl;
-        // print_connections();
+
         receive_buffer(s, client, buffer);
         
         // send ack
@@ -79,10 +77,8 @@ int main () {
                 exit(999);
             }
         }
-
     }
-
-    
+  
     /*  Close socket*/
     close(s);
   
