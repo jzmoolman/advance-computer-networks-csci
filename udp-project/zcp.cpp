@@ -7,6 +7,11 @@
 #include <pthread.h>
 
 #include "zcp.h"
+// #include "timer.h"
+
+extern void start_timer(int time);
+extern void stop_timer();
+extern int timeout_signal;
 
 struct connection_s *connections = NULL;
 
@@ -174,6 +179,11 @@ void *tx_exec(void *args) {
         /* loop through all connections */
         struct connection_s *connection = connections;
         for ( ; connection != NULL; connection = connection->next) {
+            if ( timeout_signal ) {
+                                                    std::cout << "D0 tx receive timeout signal" << connection->tx_seq << std::endl;
+                connection->tx_seq = connection->tx_base; /* resend packets from base */
+                                 
+            }
             if (connection->tx_packets.size() > connection->tx_seq) {
                 pthread_mutex_lock(&connection->tx_mutex);
                 print_packet(connection->tx_packets.at(connection->tx_seq));
@@ -187,6 +197,12 @@ void *tx_exec(void *args) {
                     perror("sendto()");
                     exit(3);                    
                 }
+
+                                                    std::cout << "D0 " << connection->tx_seq << std::endl;
+                                                    std::cout << "D1 " << connection->tx_base << std::endl;
+                if (connection->tx_base == connection->tx_seq) { 
+                    start_timer(2);
+                }
                 connection->tx_seq++;
                 pthread_mutex_unlock(&connection->tx_mutex);
             } else {
@@ -199,6 +215,8 @@ void *tx_exec(void *args) {
                     connection->rx_packets.clear();
                     connection->tx_base = 0;
                     connection->tx_seq= 0;
+                    stop_timer();
+
                     break;
                 }
             }
@@ -206,6 +224,7 @@ void *tx_exec(void *args) {
         // Project requirement
         sleep(1);
     }
+    
     return NULL;
 }
 
@@ -225,7 +244,9 @@ int handle_rx_packets() {
                                                 // std::cout << "D2" << std::endl;
                 packet = connection->rx_packets.at(i);
                 if (connection->tx_base == packet->seq-2) { // neg ack therefoe seq-1 ack and base need go up 1
-                                                // std::cout << "D3 Move base to ..." << connection->tx_base+1 << std::endl;
+                                                // std::cout << "D0 Move base to ..." << connection->tx_base+1 << std::endl;
+                                                std::cout << "Stop timer form revc ..." << connection->tx_base+1 << std::endl;
+                    stop_timer();              
                     packet = connection->tx_packets.at(connection->tx_base);
                     connection->tx_base++;
                     if (packet->type == PACKET_DATA) {
@@ -297,25 +318,25 @@ void *rx_exec(void *args) {
                     perror("recvfrom()");
                     exit(4);
                  };
-                                                   std::cout << "D1 rx_exec" << std::endl;
+                                                   // std::cout << "D1 rx_exec" << std::endl;
                  receive_buffer(connection->type, connection->fs, connection->addr, buffer);
-                                                   std::cout << "D2 rx_exec" << std::endl;
+                                                   // std::cout << "D2 rx_exec" << std::endl;
                  if (handle_rx_packets() == 1) return NULL;
             // } else {
                                                                // std::cout << "D0 packet timeout" << std::endl;
             // }
             
             
-                                                // std::cout << "D1 packets " <<  connection->tx_packets.size()<< std::endl;
-                                                // std::cout << "D2 " <<  connection->type << std::endl;
+                                                    // std::cout << "D1 packets " <<  connection->tx_packets.size()<< std::endl;
+                                                    // std::cout << "D2 " <<  connection->type << std::endl;
              if (connection->type == CLIENT_CONNECTION  && connection->tx_packets.size() == 0)  {
 
-                                               // std::cout << "D3 rx_exec done" << std::endl;
+                                                   // std::cout << "D3 rx_exec done" << std::endl;
                  return NULL;        
              }
         }
     }
-                                               // std::cout << "D4 rx_exec done" << std::endl;
+                                                   // std::cout << "D4 rx_exec done" << std::endl;
 }
 
 void openZCP() {
