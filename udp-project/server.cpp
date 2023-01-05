@@ -58,26 +58,27 @@ int main () {
             perror("recvfrom()");
             exit(4);
          };
-        // lookup_connection(client);
-        // std::cout << buffer << std::endl;
-        // print_connections();
-        receive_buffer(client, buffer);
+
+        receive_buffer(s, client, buffer);
         
         // send ack
         int seq = 0;
-        if ( ((struct packet_s *)buffer)->type == PACKET_DATA) {
-            seq = ((struct data_packet_s *)buffer)->seq; }
-        struct ack_packet_s packet;
-        packet.type = PACKET_ACK;
-        packet.seq = seq+1;
-        if ( sendto(s, &packet, sizeof(struct ack_packet_s), 0, 
-                         (const struct sockaddr *)&client, clientlen) <  0 ) {
-            perror("sendto()");
-            exit(999);
+        struct packet_s *rx_packet =  (struct packet_s *)buffer;
+        if ( rx_packet->type == PACKET_DATA) {
+            seq = ((struct data_packet_s *)buffer)->seq; 
+            struct packet_s tx_packet;
+            tx_packet.type = PACKET_ACK;
+            tx_packet.seq = rx_packet->seq +1;
+            print_packet(&tx_packet);
+
+            if ( sendto(s, &tx_packet, sizeof(struct ack_packet_s), 0, 
+                             (const struct sockaddr *)&client, clientlen) <  0 ) {
+                perror("sendto()");
+                exit(999);
+            }
         }
     }
-
-    
+  
     /*  Close socket*/
     close(s);
   
