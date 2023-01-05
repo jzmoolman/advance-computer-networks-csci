@@ -53,13 +53,26 @@ int main () {
   
     clientlen = sizeof(client);
     
+    /* simulate packet seq 3 failed to arraive the first time */
+    // FORCE TIMEOUT 
+    int seq3 = 0;
+    
     while (1) {
         if ( recvfrom(s, buffer, PACKET_SIZE_ZCP, 0, (struct sockaddr*)&client, &clientlen) < 0 ) {
             perror("recvfrom()");
             exit(4);
          };
+        
+        
+        // FORCE TIMEOUT  by removeing first seq 3 packet
 
-        receive_buffer(s, client, buffer);
+        struct data_packet_s *packet = (struct data_packet_s *)buffer;
+        if (packet->seq == 3 && seq3 == 0){
+            seq3 = 1;
+        } else 
+        // FORCE TIMEOUT  end
+
+        receive_buffer(SERVER_CONNECTION,s, client, buffer);
         
         // send ack
         int seq = 0;
